@@ -1,0 +1,213 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/2303A52267/AIML_11_2024/blob/main/2303a52267%20-%2036%20-11%20-.pynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "HT NO. 2303A52267\n",
+        "BATCH:36\n",
+        "QUESTION:11\n",
+        "Prediction of obesity levels based on eating habits\n",
+        "\n",
+        "1. Identify the top 5 reasons for obesity levels\n",
+        "\n",
+        "2. Identify the age group with most obesity\n",
+        "\n",
+        "3. Find the max and min weight of patient with obesity\n",
+        "\n",
+        "4. Name the top 5 eating habits. contributing to obesity\n",
+        "\n",
+        "5. Identify the highest usage of tech gadgets among obese patients.\n",
+        "\n",
+        "6. Apply either Classification Model or Clustering Model to evaluate the dataset"
+      ],
+      "metadata": {
+        "id": "CnOagMbmFGxY"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd"
+      ],
+      "metadata": {
+        "id": "zC1M4RIWHhU6"
+      },
+      "execution_count": 1,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "file_path = \"/content/ObesityDataSet_raw_and_data_sinthetic[1].csv\"\n",
+        "data = pd.read_csv(file_path)\n"
+      ],
+      "metadata": {
+        "id": "aAzuE2A_HxMY"
+      },
+      "execution_count": 5,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**QUESTION 1**"
+      ],
+      "metadata": {
+        "id": "piXDKbI2Ji5P"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "data['Is_Obese'] = data['NObeyesdad'].apply(\n",
+        "    lambda x: 1 if 'Obese' in x or 'Overweight' in x else 0\n",
+        ")"
+      ],
+      "metadata": {
+        "id": "m6YyRQzcISaQ"
+      },
+      "execution_count": 6,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**QUESTION 2**"
+      ],
+      "metadata": {
+        "id": "YXK4pJCWJqfv"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "obese_patients = data[data['Is_Obese'] == 1]"
+      ],
+      "metadata": {
+        "id": "X2f2Rf0fIX5f"
+      },
+      "execution_count": 7,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**QUESTION 3**"
+      ],
+      "metadata": {
+        "id": "FC0Od9vxJxGf"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "max_weight = obese_patients['Weight'].max()\n",
+        "min_weight = obese_patients['Weight'].min()"
+      ],
+      "metadata": {
+        "id": "JrHiXcntIcU4"
+      },
+      "execution_count": 8,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**QUESTION 4**"
+      ],
+      "metadata": {
+        "id": "6CEQJ81MJ6Uv"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print(f\"Maximum weight among obese patients: {max_weight}\")\n",
+        "print(f\"Minimum weight among obese patients: {min_weight}\")"
+      ],
+      "metadata": {
+        "id": "SKM3xLKMIk8y",
+        "outputId": "d55c836d-821b-4868-cbc4-5c363a212ccd",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 9,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Maximum weight among obese patients: 102.0\n",
+            "Minimum weight among obese patients: 53.0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**QUESTION 5**"
+      ],
+      "metadata": {
+        "id": "aKinu_72KPEn"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "tech_gadget_use = data.groupby('MTRANS')['Is_Obese'].sum().sort_values(ascending=False)\n",
+        "print(\"\\nHighest Usage of Tech Gadgets Among Obese Patients:\")\n",
+        "print(tech_gadget_use)"
+      ],
+      "metadata": {
+        "id": "AAVM_YYSJYai",
+        "outputId": "f5673567-5083-4820-d006-1ff63fa7eacb",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 10,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "\n",
+            "Highest Usage of Tech Gadgets Among Obese Patients:\n",
+            "MTRANS\n",
+            "Public_Transportation    401\n",
+            "Automobile               160\n",
+            "Walking                   15\n",
+            "Bike                       2\n",
+            "Motorbike                  2\n",
+            "Name: Is_Obese, dtype: int64\n"
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "colab": {
+      "name": "Welcome To Colab",
+      "provenance": [],
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "display_name": "Python 3",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
